@@ -5,85 +5,88 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UVACanvasAccess.ApiParts;
 using UVACanvasAccess.Model.Discussions;
+using UVACanvasAccess.Structures.Users;
 using UVACanvasAccess.Util;
 
 namespace UVACanvasAccess.Structures.Discussions {
-    
+
     [PublicAPI]
     public class DiscussionTopic : IPrettyPrint {
         private readonly Api _api;
-        
+
         public DiscussionHome Home { get; }
-        
+
         public ulong HomeId { get; }
-        
+
         public ulong Id { get; }
-        
+
         public string Title { get; }
-        
+
         public string Message { get; }
-        
+
         public string HtmlUrl { get; }
-        
+
         public DateTime? PostedAt { get; }
-        
+
         public DateTime? LastReplyAt { get; }
-        
+
         public bool? RequireInitialPost { get; }
-        
+
         public bool? UserCanSeePosts { get; }
-        
+
         public uint? DiscussionSubentryCount { get; }
-        
+
         public string ReadState { get; }
-        
+
         public uint? UnreadCount { get; }
-        
+
         public bool? Subscribed { get; }
-        
+
         public string SubscriptionHold { get; }
-        
+
         public string AssignmentId { get; }
-        
+
         public DateTime? DelayedPostAt { get; }
-        
+
         public bool? Published { get; }
-        
+
         public DateTime? LockAt { get; }
-        
+
         public bool? Locked { get; }
-        
+
         public bool? Pinned { get; }
-        
+
         public bool? LockedForUser { get; }
-        
+
         public object LockInfo { get; }
-        
+
         public string LockExplanation { get; }
-        
+
         public string UserName { get; }
-        
+
         public IEnumerable<uint> TopicChildren { get; }
-        
+
         public object GroupTopicChildren { get; }
-        
+
         public ulong? RootTopicId { get; }
-        
+
         public string PodcastUrl { get; }
-        
+
         public string DiscussionType { get; }
-        
+
         public ulong? GroupCategoryId { get; }
-        
+
         public IEnumerable<FileAttachment> Attachments { get; }
-        
+
         public Dictionary<string, bool> Permissions { get; }
-        
+
         public bool? AllowRating { get; }
-        
+
         public bool? OnlyGradersCanRate { get; }
-        
+
         public bool? SortByRating { get; }
+
+        public UserDisplay Author { get; }
 
         /// <summary>
         /// Gets the list of entries for this topic.
@@ -138,18 +141,20 @@ namespace UVACanvasAccess.Structures.Discussions {
             PodcastUrl = model.PodcastUrl;
             DiscussionType = model.DiscussionType;
             GroupCategoryId = model.GroupCategoryId;
-            Attachments = from a in model.Attachments 
+            Attachments = from a in model.Attachments
                           select new FileAttachment(api, a);
             Permissions = model.Permissions;
             AllowRating = model.AllowRating;
             OnlyGradersCanRate = model.OnlyGradersCanRate;
             SortByRating = model.SortByRating;
+            Author = model.Author.ConvertIfNotNull(m => new UserDisplay(api, m));
         }
 
         public string ToPrettyString() {
             return "DiscussionTopic {" +
                    ($"\n{nameof(Id)}: {Id}," +
                    $"\n{nameof(Title)}: {Title}," +
+                   $"\n{nameof(Author)}: {Author}," +
                    $"\n{nameof(Message)}: {Message}," +
                    $"\n{nameof(HtmlUrl)}: {HtmlUrl}," +
                    $"\n{nameof(PostedAt)}: {PostedAt}," +
