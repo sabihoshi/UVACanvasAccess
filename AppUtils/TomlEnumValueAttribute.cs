@@ -1,15 +1,14 @@
 using System;
 using JetBrains.Annotations;
 
-namespace AppUtils {
-    
+namespace AppUtils
+{
     [AttributeUsage(AttributeTargets.Field)]
     [PublicAPI]
-    public sealed class TomlEnumValueAttribute : Attribute {
-        public string Name { get; }
+    public sealed class TomlEnumValueAttribute : Attribute
+    {
+        public TomlEnumValueAttribute(string name) { Name = name; }
 
-        public TomlEnumValueAttribute(string name) {
-            Name = name;
-        }
+        public string Name { get; }
     }
 }

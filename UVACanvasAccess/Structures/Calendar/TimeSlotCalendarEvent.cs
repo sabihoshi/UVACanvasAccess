@@ -3,11 +3,10 @@ using System.Linq;
 using JetBrains.Annotations;
 using UVACanvasAccess.ApiParts;
 using UVACanvasAccess.Model.Calendar;
-using UVACanvasAccess.Structures.Users;
 using UVACanvasAccess.Util;
 
-namespace UVACanvasAccess.Structures.Calendar {
-    
+namespace UVACanvasAccess.Structures.Calendar
+{
     /*
       { 
         "id": 1201,
@@ -42,67 +41,66 @@ namespace UVACanvasAccess.Structures.Calendar {
         "duplicates": []
       }
      */
-    
+
     [PublicAPI]
-    public class TimeSlotCalendarEvent : BasicCalendarEvent {
-        
-        public ulong AppointmentGroupId { get; }
-        
-        public string AppointmentGroupUrl { get; }
-        
+    public class TimeSlotCalendarEvent : BasicCalendarEvent
+    {
+        internal TimeSlotCalendarEvent(Api api, CalendarEventModel model) : base(api, model)
+        {
+            AppointmentGroupId         = model.AppointmentGroupId;
+            AppointmentGroupUrl        = model.AppointmentGroupUrl;
+            CanManageAppointmentGroup  = model.CanManageAppointmentGroup;
+            ReserveUrl                 = model.ReserveUrl;
+            Reserved                   = model.Reserved;
+            ParticipantsPerAppointment = model.ParticipantsPerAppointment;
+            Reservations = model.ChildEvents?.Select(m => new UserReservationCalendarEvent(api, m))
+                ?? new List<UserReservationCalendarEvent>();
+        }
+
         public bool? CanManageAppointmentGroup { get; }
-        
-        public string ReserveUrl { get; }
-        
+
         public bool? Reserved { get; }
-        
-        public uint? ParticipantsPerAppointment { get; }
-        
+
         public IEnumerable<UserReservationCalendarEvent> Reservations { get; }
 
-        internal TimeSlotCalendarEvent(Api api, CalendarEventModel model) : base(api, model) {
-            AppointmentGroupId = model.AppointmentGroupId;
-            AppointmentGroupUrl = model.AppointmentGroupUrl;
-            CanManageAppointmentGroup = model.CanManageAppointmentGroup;
-            ReserveUrl = model.ReserveUrl;
-            Reserved = model.Reserved;
-            ParticipantsPerAppointment = model.ParticipantsPerAppointment;
-            Reservations = model.ChildEvents?.Select(m => new UserReservationCalendarEvent(api, m)) 
-                                            ?? new List<UserReservationCalendarEvent>();
-        }
-        
-        public override string ToPrettyString() {
-            return "TimeSlotCalendarEvent {" + 
-                   ($"\n{nameof(Id)}: {Id}," +
-                    $"\n{nameof(Title)}: {Title}," +
-                    $"\n{nameof(StartAt)}: {StartAt}," +
-                    $"\n{nameof(EndAt)}: {EndAt}," +
-                    $"\n{nameof(Type)}: {Type}," +
-                    $"\n{nameof(Description)}: {Description}," +
-                    $"\n{nameof(ContextCode)}: {ContextCode}," +
-                    $"\n{nameof(EffectiveContextCode)}: {EffectiveContextCode}," +
-                    $"\n{nameof(AllContextCodes)}: {AllContextCodes.ToPrettyString()}," +
-                    $"\n{nameof(WorkflowState)}: {WorkflowState}," +
-                    $"\n{nameof(Hidden)}: {Hidden}," +
-                    $"\n{nameof(ParentEventId)}: {ParentEventId}," +
-                    $"\n{nameof(ChildEventsCount)}: {ChildEventsCount}," +
-                    $"\n{nameof(ChildEvents)}: {ChildEvents?.ToPrettyString()}," +
-                    $"\n{nameof(Url)}: {Url}," +
-                    $"\n{nameof(HtmlUrl)}: {HtmlUrl}," +
-                    $"\n{nameof(AllDayDate)}: {AllDayDate}," +
-                    $"\n{nameof(AllDay)}: {AllDay}," +
-                    $"\n{nameof(CreatedAt)}: {CreatedAt}," +
-                    $"\n{nameof(UpdatedAt)}: {UpdatedAt}," +
-                    $"\n{nameof(LocationAddress)}: {LocationAddress}," +
-                    $"\n{nameof(LocationName)}: {LocationName}," + 
-                    $"\n{nameof(AppointmentGroupId)}: {AppointmentGroupId}," +
-                    $"\n{nameof(AppointmentGroupUrl)}: {AppointmentGroupUrl}," +
-                    $"\n{nameof(CanManageAppointmentGroup)}: {CanManageAppointmentGroup}," +
-                    $"\n{nameof(ReserveUrl)}: {ReserveUrl}," +
-                    $"\n{nameof(Reserved)}: {Reserved}," + 
-                    $"\n{nameof(ParticipantsPerAppointment)}: {ParticipantsPerAppointment}," +
-                    $"\n{nameof(Reservations)}: {Reservations?.ToPrettyString()},").Indent(4) + 
-                    "\n}";
-        }
+        public string AppointmentGroupUrl { get; }
+
+        public string ReserveUrl { get; }
+
+        public uint? ParticipantsPerAppointment { get; }
+
+        public ulong AppointmentGroupId { get; }
+
+        public override string ToPrettyString() => "TimeSlotCalendarEvent {" +
+            ($"\n{nameof(Id)}: {Id}," +
+                $"\n{nameof(Title)}: {Title}," +
+                $"\n{nameof(StartAt)}: {StartAt}," +
+                $"\n{nameof(EndAt)}: {EndAt}," +
+                $"\n{nameof(Type)}: {Type}," +
+                $"\n{nameof(Description)}: {Description}," +
+                $"\n{nameof(ContextCode)}: {ContextCode}," +
+                $"\n{nameof(EffectiveContextCode)}: {EffectiveContextCode}," +
+                $"\n{nameof(AllContextCodes)}: {AllContextCodes.ToPrettyString()}," +
+                $"\n{nameof(WorkflowState)}: {WorkflowState}," +
+                $"\n{nameof(Hidden)}: {Hidden}," +
+                $"\n{nameof(ParentEventId)}: {ParentEventId}," +
+                $"\n{nameof(ChildEventsCount)}: {ChildEventsCount}," +
+                $"\n{nameof(ChildEvents)}: {ChildEvents?.ToPrettyString()}," +
+                $"\n{nameof(Url)}: {Url}," +
+                $"\n{nameof(HtmlUrl)}: {HtmlUrl}," +
+                $"\n{nameof(AllDayDate)}: {AllDayDate}," +
+                $"\n{nameof(AllDay)}: {AllDay}," +
+                $"\n{nameof(CreatedAt)}: {CreatedAt}," +
+                $"\n{nameof(UpdatedAt)}: {UpdatedAt}," +
+                $"\n{nameof(LocationAddress)}: {LocationAddress}," +
+                $"\n{nameof(LocationName)}: {LocationName}," +
+                $"\n{nameof(AppointmentGroupId)}: {AppointmentGroupId}," +
+                $"\n{nameof(AppointmentGroupUrl)}: {AppointmentGroupUrl}," +
+                $"\n{nameof(CanManageAppointmentGroup)}: {CanManageAppointmentGroup}," +
+                $"\n{nameof(ReserveUrl)}: {ReserveUrl}," +
+                $"\n{nameof(Reserved)}: {Reserved}," +
+                $"\n{nameof(ParticipantsPerAppointment)}: {ParticipantsPerAppointment}," +
+                $"\n{nameof(Reservations)}: {Reservations?.ToPrettyString()},").Indent(4) +
+            "\n}";
     }
 }

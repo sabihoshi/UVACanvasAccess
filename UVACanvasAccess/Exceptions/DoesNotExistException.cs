@@ -1,11 +1,12 @@
 using System;
 
-namespace UVACanvasAccess.Exceptions {
-    
+namespace UVACanvasAccess.Exceptions
+{
     /// <summary>
-    /// Indicates that some operation failed because the target thereof does not exist or is invisible to the current user.
+    ///     Indicates that some operation failed because the target thereof does not exist or is invisible to the current user.
     /// </summary>
-    public class DoesNotExistException : Exception {
+    public class DoesNotExistException : Exception
+    {
         public DoesNotExistException() { }
 
         public DoesNotExistException(string message) : base(message) { }

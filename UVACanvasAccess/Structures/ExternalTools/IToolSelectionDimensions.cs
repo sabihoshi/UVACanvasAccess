@@ -1,6 +1,9 @@
-namespace UVACanvasAccess.Structures.ExternalTools {
-    internal interface IToolSelectionDimensions {
-        uint? SelectionWidth { get; }
+namespace UVACanvasAccess.Structures.ExternalTools
+{
+    internal interface IToolSelectionDimensions
+    {
         uint? SelectionHeight { get; }
+
+        uint? SelectionWidth { get; }
     }
 }

@@ -4,8 +4,8 @@ using UVACanvasAccess.Model.Calendar;
 using UVACanvasAccess.Structures.Users;
 using UVACanvasAccess.Util;
 
-namespace UVACanvasAccess.Structures.Calendar {
-    
+namespace UVACanvasAccess.Structures.Calendar
+{
     /*
      {
        "id": 2562,
@@ -48,52 +48,52 @@ namespace UVACanvasAccess.Structures.Calendar {
        "duplicates": []
       }
      */
-    
+
     [PublicAPI]
-    public class UserReservationCalendarEvent : BasicCalendarEvent {
-        public ulong AppointmentGroupId { get; }
-        
-        public string AppointmentGroupUrl { get; }
-        
+    public class UserReservationCalendarEvent : BasicCalendarEvent
+    {
+        internal UserReservationCalendarEvent(Api api, CalendarEventModel model) : base(api, model)
+        {
+            AppointmentGroupId  = model.AppointmentGroupId;
+            AppointmentGroupUrl = model.AppointmentGroupUrl;
+            User                = model.User.ConvertIfNotNull(m => new User(api, m));
+        }
+
         public bool? CanManageAppointmentGroup { get; }
-        
+
+        public string AppointmentGroupUrl { get; }
+
+        public ulong AppointmentGroupId { get; }
+
         public User User { get; set; }
 
-        internal UserReservationCalendarEvent(Api api, CalendarEventModel model) : base(api, model) {
-            AppointmentGroupId = model.AppointmentGroupId;
-            AppointmentGroupUrl = model.AppointmentGroupUrl;
-            User = model.User.ConvertIfNotNull(m => new User(api, m));
-        }
-
-        public override string ToPrettyString() {
-            return "UserReservationCalendarEvent {" + 
-                   ($"\n{nameof(Id)}: {Id}," +
-                    $"\n{nameof(Title)}: {Title}," +
-                    $"\n{nameof(StartAt)}: {StartAt}," +
-                    $"\n{nameof(EndAt)}: {EndAt}," +
-                    $"\n{nameof(Type)}: {Type}," +
-                    $"\n{nameof(Description)}: {Description}," +
-                    $"\n{nameof(ContextCode)}: {ContextCode}," +
-                    $"\n{nameof(EffectiveContextCode)}: {EffectiveContextCode}," +
-                    $"\n{nameof(AllContextCodes)}: {AllContextCodes.ToPrettyString()}," +
-                    $"\n{nameof(WorkflowState)}: {WorkflowState}," +
-                    $"\n{nameof(Hidden)}: {Hidden}," +
-                    $"\n{nameof(ParentEventId)}: {ParentEventId}," +
-                    $"\n{nameof(ChildEventsCount)}: {ChildEventsCount}," +
-                    $"\n{nameof(ChildEvents)}: {ChildEvents?.ToPrettyString()}," +
-                    $"\n{nameof(Url)}: {Url}," +
-                    $"\n{nameof(HtmlUrl)}: {HtmlUrl}," +
-                    $"\n{nameof(AllDayDate)}: {AllDayDate}," +
-                    $"\n{nameof(AllDay)}: {AllDay}," +
-                    $"\n{nameof(CreatedAt)}: {CreatedAt}," +
-                    $"\n{nameof(UpdatedAt)}: {UpdatedAt}," +
-                    $"\n{nameof(LocationAddress)}: {LocationAddress}," +
-                    $"\n{nameof(LocationName)}: {LocationName}," + 
-                    $"\n{nameof(AppointmentGroupId)}: {AppointmentGroupId}," +
-                    $"\n{nameof(AppointmentGroupUrl)}: {AppointmentGroupUrl}," +
-                    $"\n{nameof(CanManageAppointmentGroup)}: {CanManageAppointmentGroup}," +
-                    $"\n{nameof(User)}: {User.ToPrettyString()}").Indent(4) + 
-                    "\n}";
-        }
+        public override string ToPrettyString() => "UserReservationCalendarEvent {" +
+            ($"\n{nameof(Id)}: {Id}," +
+                $"\n{nameof(Title)}: {Title}," +
+                $"\n{nameof(StartAt)}: {StartAt}," +
+                $"\n{nameof(EndAt)}: {EndAt}," +
+                $"\n{nameof(Type)}: {Type}," +
+                $"\n{nameof(Description)}: {Description}," +
+                $"\n{nameof(ContextCode)}: {ContextCode}," +
+                $"\n{nameof(EffectiveContextCode)}: {EffectiveContextCode}," +
+                $"\n{nameof(AllContextCodes)}: {AllContextCodes.ToPrettyString()}," +
+                $"\n{nameof(WorkflowState)}: {WorkflowState}," +
+                $"\n{nameof(Hidden)}: {Hidden}," +
+                $"\n{nameof(ParentEventId)}: {ParentEventId}," +
+                $"\n{nameof(ChildEventsCount)}: {ChildEventsCount}," +
+                $"\n{nameof(ChildEvents)}: {ChildEvents?.ToPrettyString()}," +
+                $"\n{nameof(Url)}: {Url}," +
+                $"\n{nameof(HtmlUrl)}: {HtmlUrl}," +
+                $"\n{nameof(AllDayDate)}: {AllDayDate}," +
+                $"\n{nameof(AllDay)}: {AllDay}," +
+                $"\n{nameof(CreatedAt)}: {CreatedAt}," +
+                $"\n{nameof(UpdatedAt)}: {UpdatedAt}," +
+                $"\n{nameof(LocationAddress)}: {LocationAddress}," +
+                $"\n{nameof(LocationName)}: {LocationName}," +
+                $"\n{nameof(AppointmentGroupId)}: {AppointmentGroupId}," +
+                $"\n{nameof(AppointmentGroupUrl)}: {AppointmentGroupUrl}," +
+                $"\n{nameof(CanManageAppointmentGroup)}: {CanManageAppointmentGroup}," +
+                $"\n{nameof(User)}: {User.ToPrettyString()}").Indent(4) +
+            "\n}";
     }
 }

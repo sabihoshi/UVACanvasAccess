@@ -1,5 +1,7 @@
-namespace UVACanvasAccess.Structures.ExternalTools {
-    internal interface IToolUrl {
+namespace UVACanvasAccess.Structures.ExternalTools
+{
+    internal interface IToolUrl
+    {
         string Url { get; }
     }
 }

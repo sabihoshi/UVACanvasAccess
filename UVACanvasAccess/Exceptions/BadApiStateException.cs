@@ -1,11 +1,12 @@
 using System;
 
-namespace UVACanvasAccess.Exceptions {
-    
+namespace UVACanvasAccess.Exceptions
+{
     /// <summary>
-    /// Indicates that an operation failed due to bad state, or because completing it would result in a bad state.
+    ///     Indicates that an operation failed due to bad state, or because completing it would result in a bad state.
     /// </summary>
-    public class BadApiStateException : Exception {
+    public class BadApiStateException : Exception
+    {
         public BadApiStateException() { }
 
         public BadApiStateException(string message) : base(message) { }

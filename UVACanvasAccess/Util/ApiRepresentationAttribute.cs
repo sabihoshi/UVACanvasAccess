@@ -1,13 +1,12 @@
 using System;
 
-namespace UVACanvasAccess.Util {
-    
+namespace UVACanvasAccess.Util
+{
     [AttributeUsage(AttributeTargets.Field)]
-    internal sealed class ApiRepresentationAttribute : Attribute {
-        internal string Representation { get; }
+    internal sealed class ApiRepresentationAttribute : Attribute
+    {
+        public ApiRepresentationAttribute(string representation) { Representation = representation; }
 
-        public ApiRepresentationAttribute(string representation) {
-            Representation = representation;
-        }
+        internal string Representation { get; }
     }
 }

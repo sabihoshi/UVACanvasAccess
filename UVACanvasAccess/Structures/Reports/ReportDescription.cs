@@ -4,51 +4,50 @@ using UVACanvasAccess.ApiParts;
 using UVACanvasAccess.Model.Reports;
 using UVACanvasAccess.Util;
 
-namespace UVACanvasAccess.Structures.Reports {
-    
+namespace UVACanvasAccess.Structures.Reports
+{
     [PublicAPI]
-    public class ReportDescription : IPrettyPrint {
+    public class ReportDescription : IPrettyPrint
+    {
         private readonly Api _api;
-        
+
+        internal ReportDescription(Api api, ReportDescriptionModel model)
+        {
+            _api   = api;
+            Report = model.Report;
+            Title  = model.Title;
+            Parameters = model.Parameters?.ValSelect(m => new ReportParameterDescription(m))
+                ?? new Dictionary<string, ReportParameterDescription>();
+        }
+
+        [NotNull] public Dictionary<string, ReportParameterDescription> Parameters { get; }
+
         public string Report { get; }
-        
+
         public string Title { get; }
 
-        [NotNull]
-        public Dictionary<string, ReportParameterDescription> Parameters { get; }
-
-        internal ReportDescription(Api api, ReportDescriptionModel model) {
-            _api = api;
-            Report = model.Report;
-            Title = model.Title;
-            Parameters = model.Parameters?.ValSelect(m => new ReportParameterDescription(m))
-                                         ?? new Dictionary<string, ReportParameterDescription>();
-        }
-
-        public string ToPrettyString() {
-            return "ReportDescription {" +
-                   ($"\n{nameof(Report)}: {Report}," +
-                   $"\n{nameof(Title)}: {Title}," + 
-                   $"\n{nameof(Parameters)}: {Parameters.ToPrettyString()}").Indent(4) +
-                   "\n}";
-        }
+        public string ToPrettyString() => "ReportDescription {" +
+            ($"\n{nameof(Report)}: {Report}," +
+                $"\n{nameof(Title)}: {Title}," +
+                $"\n{nameof(Parameters)}: {Parameters.ToPrettyString()}").Indent(4) +
+            "\n}";
     }
 
-    public class ReportParameterDescription : IPrettyPrint {
-        public string Description { get; }
-        
+    public class ReportParameterDescription : IPrettyPrint
+    {
+        internal ReportParameterDescription(ReportParameterDescriptionModel model)
+        {
+            Description = model.Description;
+            Required    = model.Required;
+        }
+
         public bool Required { get; }
 
-        internal ReportParameterDescription(ReportParameterDescriptionModel model) {
-            Description = model.Description;
-            Required = model.Required;
-        }
+        public string Description { get; }
 
-        public string ToPrettyString() {
-            return "ReportParameterDescription {" +
-                   ($"\n{nameof(Description)}: {Description}," +
-                   $"\n{nameof(Required)}: {Required}").Indent(4) +
-                   "\n}";
-        }
+        public string ToPrettyString() => "ReportParameterDescription {" +
+            ($"\n{nameof(Description)}: {Description}," +
+                $"\n{nameof(Required)}: {Required}").Indent(4) +
+            "\n}";
     }
 }
