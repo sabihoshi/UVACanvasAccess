@@ -93,9 +93,8 @@ namespace RollingAttendanceColumns
             {
                 var courses = courseLimit <= 0
                     ? api.StreamCourses(includes: Term)
-                    : AsyncEnumerable.Repeat(
-                        await api.GetCourse(Convert.ToUInt64(courseLimit),
-                            includes: Api.IndividualLevelCourseIncludes.Term), 1);
+                    : api.GetCourse(Convert.ToUInt64(courseLimit), includes: Api.IndividualLevelCourseIncludes.Term)
+                        .ToAsyncEnumerable();
 
                 var nextMonday = NextWeekday(DateTime.Today, Monday);
                 var nextMondayStr = FormatColumnName(nextMonday);

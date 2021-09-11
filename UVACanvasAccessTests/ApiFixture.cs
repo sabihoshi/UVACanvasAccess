@@ -9,7 +9,7 @@ namespace UVACanvasAccessTests
     {
         public ApiFixture()
         {
-            DotEnv.Config();
+            DotEnv.Load();
 
             Api = new Api(Environment.GetEnvironmentVariable("TEST_TOKEN"),
                 "https://uview.instructure.com/api/v1/");

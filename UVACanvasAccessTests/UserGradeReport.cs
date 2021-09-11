@@ -19,7 +19,7 @@ namespace UVACanvasAccessTests
         public UserGradeReport(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            DotEnv.Config();
+            DotEnv.Load();
             _api = new Api(Environment.GetEnvironmentVariable("TEST_TOKEN")
                 ?? throw new ArgumentException(".env should contain TEST_TOKEN"),
                 "https://uview.instructure.com/api/v1/");

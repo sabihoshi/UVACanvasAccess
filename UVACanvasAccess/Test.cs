@@ -26,7 +26,7 @@ namespace UVACanvasAccess
 
         public static async Task Main(string[] args)
         {
-            DotEnv.Config();
+            DotEnv.Load();
             var api = new Api(Environment.GetEnvironmentVariable("TEST_TOKEN")
                 ?? ".env should have TEST_TOKEN",
                 "https://uview.instructure.com/api/v1/");

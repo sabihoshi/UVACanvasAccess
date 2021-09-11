@@ -64,7 +64,7 @@ namespace ManageAttendanceColumns
             {
                 var courses = courseLimit <= 0
                     ? api.StreamCourses()
-                    : AsyncEnumerable.Repeat(await api.GetCourse(Convert.ToUInt64(courseLimit)), 1);
+                    : api.GetCourse(Convert.ToUInt64(courseLimit)).ToAsyncEnumerable();
 
                 await foreach (var course in courses)
                 {
