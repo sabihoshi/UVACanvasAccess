@@ -45,11 +45,11 @@ namespace UVACanvasAccess.Util
         /// <param name="seq">The stream.</param>
         /// <param name="keySelector">The key selector.</param>
         /// <returns>The stream of distinct elements.</returns>
-        public static IAsyncEnumerable<T> Distinct<T, TU>(this IAsyncEnumerable<T> seq, Func<T, TU> keySelector)
-        {
-            return seq.GroupBy(keySelector)
-                .SelectAwait(gp => gp.FirstAsync());
-        }
+        // public static IAsyncEnumerable<T> Distinct<T, TU>(this IAsyncEnumerable<T> seq, Func<T, TU> keySelector)
+        // {
+        //     return seq.GroupBy(keySelector)
+        //         .SelectAwait(gp => gp.FirstAsync());
+        // }
 
         [PublicAPI]
         public static IAsyncEnumerable<T> Peek<T>([NotNull] this IAsyncEnumerable<T> iae, Action<T> a)
